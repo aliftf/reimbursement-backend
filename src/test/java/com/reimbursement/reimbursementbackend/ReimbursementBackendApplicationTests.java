@@ -21,7 +21,7 @@ class ReimbursementBackendApplicationTests {
     void contextLoads() {
         List<User> users = new ArrayList<>();
         users = userRepository.findAll();
-        Assertions.assertEquals(1, users.size());
+        Assertions.assertEquals(5, users.size());
     }
 
     @Test

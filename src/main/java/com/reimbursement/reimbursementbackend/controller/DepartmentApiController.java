@@ -4,7 +4,6 @@ import com.reimbursement.reimbursementbackend.dto.DepartmentDto;
 import com.reimbursement.reimbursementbackend.service.DepartmentService;
 import com.reimbursement.reimbursementbackend.utils.ApiResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/departments")
 @RequiredArgsConstructor
-public class DepartmentController {
+public class DepartmentApiController {
 
     private final DepartmentService departmentService;
 

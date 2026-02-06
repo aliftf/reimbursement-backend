@@ -14,8 +14,16 @@ import com.reimbursement.reimbursementbackend.repository.UserRepository;
 import com.reimbursement.reimbursementbackend.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -25,6 +33,7 @@ public class AuthServiceImpl implements AuthService {
     private final EmployeeRepository employeeRepository;
     private final DepartmentRepository departmentRepository;
     private final RoleRepository roleRepository;
+    private final PasswordEncoder encoder;
 
     @Override
     @Transactional
@@ -42,7 +51,15 @@ public class AuthServiceImpl implements AuthService {
         Employee employee = new Employee(null, dto.getFullName(), dto.getPhoneNumber(), dto.getPersonalEmail(), department, manager);
         employee = employeeRepository.save(employee);
 
-        User user = new User(null, dto.getUsername(), dto.getPassword(), dto.getWorkEmail(), employee, role);
+        User user = new User(
+                null,
+                dto.getUsername(),
+                encoder.encode(dto.getPassword()),
+                dto.getWorkEmail(),
+                employee,
+                role
+        );
+
         user = userRepository.save(user);
 
         return userRepository.findById(user.getId()).isPresent();

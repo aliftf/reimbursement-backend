@@ -21,4 +21,11 @@ public class ApiResponse {
         response.put("data", data);
         return new ResponseEntity<Object>(response, httpStatus);
     }
+
+    public static ResponseEntity<Object> generateToken(HttpStatus httpStatus, String token) {
+        Map<String, Object> response = new HashMap<>();
+        response.put("status", httpStatus);
+        response.put("token", token);
+        return new ResponseEntity<Object>(response, httpStatus);
+    }
 }
