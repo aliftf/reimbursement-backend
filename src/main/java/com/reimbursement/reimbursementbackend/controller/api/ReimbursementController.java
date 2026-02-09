@@ -1,4 +1,4 @@
-package com.reimbursement.reimbursementbackend.controller;
+package com.reimbursement.reimbursementbackend.controller.api;
 
 import com.reimbursement.reimbursementbackend.dto.ReimbursementRoadmapRequestDto;
 import com.reimbursement.reimbursementbackend.dto.SubmitReimbursementRequestDto;

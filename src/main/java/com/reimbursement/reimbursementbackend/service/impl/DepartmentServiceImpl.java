@@ -46,6 +46,27 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
+    public DepartmentDto save(DepartmentDto dto) {
+
+        Department d;
+
+        if (dto.getId() != null) {
+            d = departmentRepository.findById(dto.getId())
+                    .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Department not found"));
+        } else {
+            d = new Department();
+        }
+
+        departmentRepository.findByName(dto.getName())
+                .filter(department -> !department.getId().equals(dto.getId()))
+                .ifPresent(department -> { throw new ApiException(HttpStatus.CONFLICT, "Department name already exists"); });
+
+        d.setName(dto.getName());
+        d = departmentRepository.save(d);
+        return toDto(d);
+    }
+
+    @Override
     public DepartmentDto get(Integer id) {
         Department d = departmentRepository.findById(id)
                 .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Department not found"));

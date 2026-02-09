@@ -7,6 +7,7 @@ import com.reimbursement.reimbursementbackend.entity.ReimbursementStatus;
 import com.reimbursement.reimbursementbackend.exception.ApiException;
 import com.reimbursement.reimbursementbackend.repository.ReimbursementStatusRepository;
 import com.reimbursement.reimbursementbackend.service.ReimbursementStatusService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -14,10 +15,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ReimbursementStatusServiceImpl implements ReimbursementStatusService {
-
-    @Autowired
-    private ReimbursementStatusRepository reimbursementStatusRepository;
+    private final ReimbursementStatusRepository reimbursementStatusRepository;
 
     @Override
     public ReimbursementStatusDto create(ReimbursementStatusDto dto) {
@@ -45,6 +45,26 @@ public class ReimbursementStatusServiceImpl implements ReimbursementStatusServic
         rs.setName(dto.getName());
         rs = reimbursementStatusRepository.save(rs);
         return toDto(rs);
+    }
+
+    @Override
+    public ReimbursementStatusDto save(ReimbursementStatusDto dto) {
+
+        ReimbursementStatus s = new ReimbursementStatus();
+
+        if (dto.getId() != null) {
+            s = reimbursementStatusRepository.findById(dto.getId())
+                    .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Reimbursement status not found"));
+        }
+
+        reimbursementStatusRepository.findByName(dto.getName())
+                .filter(status -> !status.getId().equals(dto.getId()))
+                .ifPresent(status -> {throw new ApiException(HttpStatus.CONFLICT, "Status name already exists"); });
+
+        s.setName(dto.getName());
+        s = reimbursementStatusRepository.save(s);
+
+        return toDto(s);
     }
 
     @Override

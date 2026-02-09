@@ -5,13 +5,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class EmployeeDto {
+@AllArgsConstructor @NoArgsConstructor
+public class EmployeeResponseDto {
     private Integer id;
     private String fullName;
     private String phoneNumber;
     private String personalEmail;
-    private DepartmentDto department;
-    private ManagerDto manager;
+    private String departmentName;
+    private String managerName;
 }

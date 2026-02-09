@@ -1,4 +1,4 @@
-package com.reimbursement.reimbursementbackend.controller;
+package com.reimbursement.reimbursementbackend.controller.api;
 
 import com.reimbursement.reimbursementbackend.dto.AuthRequestDto;
 import com.reimbursement.reimbursementbackend.service.jwt.JwtService;

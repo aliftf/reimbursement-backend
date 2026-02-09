@@ -1,4 +1,4 @@
-package com.reimbursement.reimbursementbackend.controller;
+package com.reimbursement.reimbursementbackend.controller.api;
 
 import com.reimbursement.reimbursementbackend.dto.DepartmentDto;
 import com.reimbursement.reimbursementbackend.service.DepartmentService;
