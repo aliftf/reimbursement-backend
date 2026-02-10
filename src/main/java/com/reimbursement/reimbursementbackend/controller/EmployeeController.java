@@ -29,6 +29,11 @@ public class EmployeeController {
         return "employee/index";
     }
 
+    @GetMapping("main")
+    public String main(Model model) {
+        return "layout/main";
+    }
+
     @GetMapping(value = { "form/{id}", "form"})
     public String form(Model model, @PathVariable(required = false) Integer id) {
         List<DepartmentDto> departments = departmentService.getAll();
